@@ -2,14 +2,28 @@
 
 The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/chatops-rocket-chat-hubot-bot-docker](https://continuous.lu/2017/04/05/chatops-rocket-chat-hubot-bot-docker) was converted by [Kompose](https://github.com/kubernetes-incubator/kompose) and then into one single yml.
 
-## In Docker Compose
+# Run Rocket.Chat with Docker Compose
 
-1.
+1. Run Rocket.Chat with docker-compose
     ```
     docker-compose -f docker-compose.yml up
     ```
 
-## In Kubernetes
+
+# Deploy Rocket.Chat in Kubernetes on Bluemix
+
+## Step 1 - Deploy Rocket.Chat in a lite cluster
+
+1. Perform the steps 1 to 4 available on this [tutorial](https://github.com/lionelmace/bluemix-labs/tree/master/labs/Lab%20Kubernetes%20-%20Orchestrate%20your%20docker%20containers). In Step 3, make sure to follow Step 3.1 Create a Lite Cluster.
+
+1. Deploy Rocker.Chat
+    ```
+    kubect create -f rocketchat-kube-nodeport-novolume.yml
+    ```
+
+## Step 2 - Deploy Rocket.Chat in a standard cluster
+
+1. Perform the steps 1 to 4 available on this [tutorial](https://github.com/lionelmace/bluemix-labs/tree/master/labs/Lab%20Kubernetes%20-%20Orchestrate%20your%20docker%20containers).  In Step 3, make sure to follow Step 3.2 Create a Standard Cluster.
 
 1. Create the persistent volume claim.
     ```
@@ -20,7 +34,6 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
     ```
     kubectl describe pvc db-claim0
     ```
-    Output:
 
 1. Access your cluster
 
@@ -47,3 +60,16 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
     Name            Enabled
     basic-ingress   true
     ```
+
+1. In the file `rocketchat-kube-ingress.yml`, replace the host value on line 43 by the Ingress subdomain in the output above:
+    ```
+    - host: lionel-cluster-fra.eu-central.containers.mybluemix.net
+    ```
+
+1. Deploy Rocket.Chat
+    ```
+    kubect create -f rocketchat-kube-ingress.yml
+    ```
+
+1. Access Rocket.Chat with the URL
+    `<ingress-domain>:3000`

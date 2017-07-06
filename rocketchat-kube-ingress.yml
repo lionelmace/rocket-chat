@@ -3,14 +3,12 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   name: rocketchat
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         service: rocketchat
     spec:
@@ -36,19 +34,35 @@ spec:
       restartPolicy: Always
 status: {}
 ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rocketchat-ingress
+spec:
+  rules:
+  - host: lionel-cluster-fra.eu-central.containers.mybluemix.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rocketchat
+          servicePort: 3000
+
+---
 # Service Rocket.Chat to deploy
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     service: rocketchat
   name: rocketchat
 spec:
+  # type: NodePort
   ports:
-  - name: "3000"
+  - protocol: TCP
     port: 3000
-    targetPort: 3000
+    # targetPort: 3000
+    # nodePort: 30000
   selector:
     service: rocketchat
 status:
@@ -58,14 +72,12 @@ status:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   name: hubot
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         service: hubot
     spec:
@@ -97,14 +109,12 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     service: hubot
   name: hubot
 spec:
   ports:
-  - name: "3001"
-    port: 3001
+  - port: 3001
     targetPort: 8080
   selector:
     service: hubot
@@ -122,7 +132,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         service: db
     spec:
@@ -154,14 +163,12 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     service: db
   name: db
 spec:
   ports:
-  - name: "27017"
-    port: 27017
+  - port: 27017
     targetPort: 27017
   selector:
     service: db
