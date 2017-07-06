@@ -90,4 +90,4 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
 
 # Resources
 - [Configure Ingress Controler without TLS](https://console.bluemix.net/docs/containers/cs_apps.html#ibm_domain)
-- [Create Persistence Volume Claim](Storage classes: https://console.ng.bluemix.net/docs/containers/cs_apps.html#cs_apps_volume_claim)
+- [Create Persistence Volume Claim](https://console.ng.bluemix.net/docs/containers/cs_apps.html#cs_apps_volume_claim)
