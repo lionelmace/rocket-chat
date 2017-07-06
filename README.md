@@ -16,7 +16,7 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
 
 1. Perform the steps 1 to 4 available on this [tutorial](https://github.com/lionelmace/bluemix-labs/tree/master/labs/Lab%20Kubernetes%20-%20Orchestrate%20your%20docker%20containers). In Step 3, make sure to follow Step 3.1 Create a Lite Cluster.
 
-1. Deploy Rocker.Chat
+1. Deploy Rocket.Chat
     ```
     kubect create -f rocketchat-kube-nodeport-novolume.yml
     ```
@@ -27,7 +27,7 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
 
 1. Create the persistent volume claim.
     ```
-    kubectl apply -f rocketchat-pvc.yml
+    kubectl create -f rocketchat-pvc.yml
     ```
 
 1. Verify that your persistent volume claim is created and bound to the persistent volume object. This process can take a few minutes.
@@ -38,7 +38,7 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
 1. Access your cluster
 
     ```
-    bx cs cluster-get lionel-cluster-fra
+    bx cs cluster-get <cluster-name>
     ```
     Output
     ```
@@ -62,7 +62,7 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
     ```
 
 1. In the file `rocketchat-kube-ingress.yml`, replace the host value on line 43 by the Ingress subdomain in the output above:
-    ```
+    ```yml
     - host: lionel-cluster-fra.eu-central.containers.mybluemix.net
     ```
 
