@@ -2,6 +2,14 @@
 
 The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/chatops-rocket-chat-hubot-bot-docker](https://continuous.lu/2017/04/05/chatops-rocket-chat-hubot-bot-docker) was converted by [Kompose](https://github.com/kubernetes-incubator/kompose) and then into one single yml.
 
+## In Docker Compose
+
+1.
+    ```
+    docker-compose -f docker-compose.yml up
+    ```
+
+## In Kubernetes
 
 1. Create the persistent volume claim.
     ```
