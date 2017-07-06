@@ -3,14 +3,16 @@ db:
   volumes:
     - ./data/runtime/db:/data/db
     - ./data/dump:/dump
+  ports:
+    - 27017:27017
   command: mongod --smallfiles
 
 rocketchat:
   image: rocketchat/rocket.chat:0.54.2
   environment:
     - MONGO_URL=mongodb://db:27017/rocketchat
-    #- ROOT_URL=https://192.168.99.100/
-    - ROOT_URL=https://169.254.102.62/
+    # - ROOT_URL=https://9.101.134.207/
+    - ROOT_URL=https://localhost/
     - Accounts_UseDNSDomainCheck=True
     - ADMIN_USERNAME=admin
     - ADMIN_PASS=supersecret
@@ -23,8 +25,8 @@ rocketchat:
 hubot:
   image: rocketchat/hubot-rocketchat:v1.0.6
   environment:
-    #- ROCKETCHAT_URL=192.168.99.100:3000
-    - ROCKETCHAT_URL=169.254.102.62:3000
+    # - ROCKETCHAT_URL=9.101.134.207:3000
+    - ROCKETCHAT_URL=localhost:3000
     - ROCKETCHAT_ROOM=GENERAL
     - ROCKETCHAT_USER=bot
     - ROCKETCHAT_PASSWORD=bot
