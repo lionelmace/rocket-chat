@@ -21,6 +21,15 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
     kubect create -f rocketchat-kube-nodeport-novolume.yml
     ```
 
+1. 1. Get the public IP of the worker node in the cluster
+    ```
+    kubectl get nodes
+    ```
+
+1. Access Rocket.Chat with the URL
+    `http://<ip-address>:30000`
+
+
 ## Step 2 - Deploy Rocket.Chat in a standard cluster
 
 1. Perform the steps 1 to 4 available on this [tutorial](https://github.com/lionelmace/bluemix-labs/tree/master/labs/Lab%20Kubernetes%20-%20Orchestrate%20your%20docker%20containers).  In Step 3, make sure to follow Step 3.2 Create a Standard Cluster.
@@ -63,8 +72,13 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
 
 1. In the file `rocketchat-kube-ingress.yml`, replace the host value on line 43 by the Ingress subdomain in the output above:
     ```yml
+    - host: <ingress-domain>
+    ```
+    Example:
+    ```yml
     - host: lionel-cluster-fra.eu-central.containers.mybluemix.net
     ```
+
 
 1. Deploy Rocket.Chat
     ```
@@ -72,4 +86,8 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
     ```
 
 1. Access Rocket.Chat with the URL
-    `<ingress-domain>:3000`
+    `http://<ingress-domain>:3000`
+
+# Resources
+- [Configure Ingress Controler without TLS](https://console.bluemix.net/docs/containers/cs_apps.html#ibm_domain)
+- [Create Persistence Volume Claim](Storage classes: https://console.ng.bluemix.net/docs/containers/cs_apps.html#cs_apps_volume_claim)
