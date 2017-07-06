@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: hubot
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: hubot
+    spec:
+      containers:
+      - env:
+        - name: ROCKETCHAT_URL
+          value: 192.168.99.100:3000
+        - name: ROCKETCHAT_ROOM
+          value: GENERAL
+        - name: ROCKETCHAT_USER
+          value: bot
+        - name: ROCKETCHAT_PASSWORD
+          value: bot
+        - name: LISTEN_ON_ALL_PUBLIC
+          value: "true"
+        - name: BOT_NAME
+          value: hubot
+        - name: EXTERNAL_SCRIPTS
+          value: hubot-help,hubot-seen,hubot-links,hubot-greetings,hubot-diagnostics,hubot-google,hubot-reddit,hubot-bofh,hubot-bookmark,hubot-shipit,hubot-maps
+        image: rocketchat/hubot-rocketchat:v1.0.6
+        name: hubot
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+status: {}

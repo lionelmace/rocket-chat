@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: rocketchat
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: rocketchat
+    spec:
+      containers:
+      - env:
+        - name: MONGO_URL
+          value: mongodb://db:27017/rocketchat
+        - name: ROOT_URL
+          value: https://192.168.99.100/
+        - name: Accounts_UseDNSDomainCheck
+          value: "True"
+        - name: ADMIN_USERNAME
+          value: admin
+        - name: ADMIN_PASS
+          value: supersecret
+        - name: ADMIN_EMAIL
+          value: admin@example.com
+        image: rocketchat/rocket.chat:0.54.2
+        name: rocketchat
+        ports:
+        - containerPort: 3000
+        resources: {}
+      restartPolicy: Always
+status: {}
