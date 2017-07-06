@@ -3,27 +3,27 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   name: db-claim0
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-file-silver"
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 100Mi
-status: {}
 
 ---
 # PVC 2
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   name: db-claim1
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-file-silver"
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 100Mi
-status: {}

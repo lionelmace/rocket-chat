@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+    tier: backend
+    role: database
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 27017
+    targetPort: 27017
+  selector:
+    app: mongo
+    tier: backend
+    role: database
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mongo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo
+        role: database
+        tier: backend
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        resources:
+          requests:
+            cpu: 20m
+            memory: 256Mi
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lets-chat-frontend
+  labels:
+    app: lets-chat
+    tier: frontend
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 32000
+  selector:
+    app: lets-chat
+    tier: frontend
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lets-chat-frontend
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: lets-chat
+        tier: frontend
+    spec:
+      containers:
+      - name: lets-chat
+        image: sdelements/lets-chat:latest
+        resources:
+          requests:
+            cpu: 20m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+          # If your cluster config does not include a dns service, then to
+          # instead access environment variables to find service host
+          # info, comment out the 'value: dns' line above, and uncomment the
+          # line below.
+          # value: env
+        ports:
+        - containerPort: 8080

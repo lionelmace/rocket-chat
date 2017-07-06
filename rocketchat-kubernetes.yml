@@ -115,7 +115,6 @@ status:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   name: db
 spec:
   replicas: 1
@@ -133,6 +132,8 @@ spec:
         - --smallfiles
         image: mongo:3.5.5
         name: db
+        ports:
+        - containerPort: 27017
         resources: {}
         volumeMounts:
         - mountPath: /data/db
@@ -158,11 +159,10 @@ metadata:
     service: db
   name: db
 spec:
-  clusterIP: None
   ports:
-  - name: headless
-    port: 55555
-    targetPort: 0
+  - name: "27017"
+    port: 27017
+    targetPort: 27017
   selector:
     service: db
 status:
