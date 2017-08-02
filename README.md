@@ -44,6 +44,16 @@ The docker-compose.yml available on this page [https://continuous.lu/2017/04/05/
     kubectl describe pvc db-claim0
     ```
 
+1. To find out the list of storage plans
+    ```
+    kubectl get storageclasses
+    ```
+
+1. To get the details for a given storage plan
+    ```
+    kubectl describe storageclasses ibmc-file-silver
+    ```
+
 1. Access your cluster
 
     ```
